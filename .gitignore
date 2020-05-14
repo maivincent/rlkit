@@ -7,3 +7,13 @@ rlkit/launchers/conf_private.py
 MANIFEST
 *.egg-info
 \.idea/
+
+data/name-of-experiment/name-of-experiment_2020_05_13_18_41_18_0000--s-0/debug.log
+
+data/name-of-experiment/name-of-experiment_2020_05_13_18_41_18_0000--s-0/git_infos.txt
+
+data/name-of-experiment/name-of-experiment_2020_05_13_18_41_18_0000--s-0/params.pkl
+
+data/name-of-experiment/name-of-experiment_2020_05_13_18_41_18_0000--s-0/progress.csv
+
+data/name-of-experiment/name-of-experiment_2020_05_13_18_41_18_0000--s-0/variant.json
