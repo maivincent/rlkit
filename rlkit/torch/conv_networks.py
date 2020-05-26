@@ -91,16 +91,16 @@ class CNN(nn.Module):
         self.last_fc.weight.data.uniform_(-init_w, init_w)
         self.last_fc.bias.data.uniform_(-init_w, init_w)
 
-    def forward(self, input):
+    def forward(self, input, extra_fc_input, complete = True):
         fc_input = (self.added_fc_input_size != 0)
 
         conv_input = input.narrow(start=0,
                                   length=self.conv_input_length,
                                   dim=1).contiguous()
-        if fc_input:
-            extra_fc_input = input.narrow(start=self.conv_input_length,
-                                          length=self.added_fc_input_size,
-                                          dim=1)
+        #if fc_input:
+         #   extra_fc_input = input.narrow(start=self.conv_input_length,
+        #                                 length=self.added_fc_input_size,
+         #                                 dim=1)
         # need to reshape from batch of flattened images into (channsls, w, h)
         h = conv_input.view(conv_input.shape[0],
                             self.input_channels,
@@ -111,12 +111,15 @@ class CNN(nn.Module):
                                use_batch_norm=self.batch_norm_conv)
         # flatten channels for fc layers
         h = h.view(h.size(0), -1)
+
         if fc_input:
             h = torch.cat((h, extra_fc_input), dim=1)
         h = self.apply_forward(h, self.fc_layers, self.fc_norm_layers,
                                use_batch_norm=self.batch_norm_fc)
-
-        output = self.output_activation(self.last_fc(h))
+        if complete:
+            output = self.output_activation(self.last_fc(h))
+        else:
+            output = h
         return output
 
     def apply_forward(self, input, hidden_layers, norm_layers,

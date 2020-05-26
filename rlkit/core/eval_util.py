@@ -74,6 +74,7 @@ def create_stats_ordered_dict(
         always_show_all_stats=True,
         exclude_max_min=False,
 ):
+
     if stat_prefix is not None:
         name = "{}{}".format(stat_prefix, name)
     if isinstance(data, Number):
@@ -100,14 +101,33 @@ def create_stats_ordered_dict(
         else:
             data = np.concatenate(data)
 
+
     if (isinstance(data, np.ndarray) and data.size == 1
             and not always_show_all_stats):
         return OrderedDict({name: float(data)})
 
-    stats = OrderedDict([
-        (name + ' Mean', np.mean(data)),
-        (name + ' Std', np.std(data)),
-    ])
+    if isinstance(data[0], dict):
+        try:
+            if data.size > 2:
+                return OrderedDict({name: [data[0], data[-1]]})
+            else:
+                return OrderedDict({name: data})
+        except:
+            print('Fix did not work...')
+            pass
+    
+
+    try:
+        stats = OrderedDict([
+            (name + ' Mean', np.mean(data)),
+            (name + ' Std', np.std(data)),
+        ])
+    except:
+        #print('ERROR')
+        #print('name: {} and stat_prefix: {}'.format(name, stat_prefix))
+        #print('data: {}'.format(data))
+        pass
+
     if not exclude_max_min:
         stats[name + ' Max'] = np.max(data)
         stats[name + ' Min'] = np.min(data)

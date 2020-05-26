@@ -17,3 +17,15 @@ data/name-of-experiment/name-of-experiment_2020_05_13_18_41_18_0000--s-0/params.
 data/name-of-experiment/name-of-experiment_2020_05_13_18_41_18_0000--s-0/progress.csv
 
 data/name-of-experiment/name-of-experiment_2020_05_13_18_41_18_0000--s-0/variant.json
+
+*.log
+
+*.csv
+
+*.json
+
+*.txt
+
+*.patch
+
+*.pkl
