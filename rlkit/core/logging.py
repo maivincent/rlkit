@@ -168,7 +168,11 @@ class Logger(object):
             print(out)
             for fd in list(self._text_fds.values()):
                 fd.write(out + '\n')
-                fd.flush()
+                try:
+                    fd.flush()
+                except:
+                    print("Error on fd.flush(). Here is fd: {}. \n Passing...".format(fd))
+                    pass
             sys.stdout.flush()
 
     def record_tabular(self, key, val):
